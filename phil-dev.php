@@ -15,9 +15,12 @@ return [
     ],
     'deptrac' => [
         // The SVG baker reads and writes images through the DOM extension of PHP, which is outside the default; the
-        // resolution of a did:web reads its address through phil/url and its document through phil/safe-http.
+        // resolution of a did:web reads its address through phil/url and its document through phil/safe-http; the tokens
+        // and proofs are signed and verified by web-token/jwt-library, a layer of its own once another package of the
+        // monorepo is allowed it too.
+        'allow' => ['^Jose\\\\.*'],
         'ruleset' => [
-            'PhilOpenBadges' => ['DefaultAllowed', 'Forbidden', 'PhilUrl', 'PhilSafeHttp'],
+            'PhilOpenBadges' => ['DefaultAllowed', 'Forbidden', 'AllowedJose', 'PhilUrl', 'PhilSafeHttp'],
         ],
     ],
     'phpstan' => [
@@ -31,8 +34,7 @@ return [
             // - A permutation whose path is already worse than the chosen one is skipped as soon as that is known: to
             //   skip it later, or to stop pruning it, or to prune it on an equal path, chooses the same path.
             'Continue_' => ['ignoreSourceCodeByRegex' => ['continue 2;']],
-            'DecrementInteger' => ['ignoreSourceCodeByRegex' => ['continue 2;', '.*gzdecode\\(.*', "\\\$address = 'https://'.*", '.*chunk_split\\(sodium_bin2base64.*']],
-            'IncrementInteger' => ['ignoreSourceCodeByRegex' => ['.*chunk_split\\(sodium_bin2base64.*']],
+            'DecrementInteger' => ['ignoreSourceCodeByRegex' => ['continue 2;', '.*gzdecode\\(.*', "\\\$address = 'https://'.*"]],
             'GreaterThanOrEqualTo' => ['ignoreSourceCodeByRegex' => ["return '' !== \\\$chosen.*"]],
             'GreaterThanOrEqualToNegotiation' => ['ignoreSourceCodeByRegex' => ["return '' !== \\\$chosen.*"]],
             'GreaterThan' => ['ignoreSourceCodeByRegex' => ["return '' !== \\\$chosen.*"]],
