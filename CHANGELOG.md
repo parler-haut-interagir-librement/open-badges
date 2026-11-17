@@ -4,6 +4,15 @@ All notable changes to `phil/open-badges` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## 0.3.0-alpha - 2026-11-17
+
+The next version is 0.3.0-alpha: `JwtVerifier` refuses a token whose `nbf` or `exp` is not a number, which it accepted.
+
+### Security
+
+- `JwtVerifier` reads `nbf` and `exp` as NumericDates, with or without a fraction of a second, and refuses a value of
+  another type: a fractional value was skipped, so a signed credential passed before its start or after its expiry.
+
 ## 0.2.0-alpha - 2026-11-15
 
 The next version is 0.2.0-alpha: the two key contracts change. [Upgrading](doc/upgrading.md) lists what to change.
